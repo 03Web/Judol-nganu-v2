@@ -490,12 +490,52 @@
           ><button class="btn-tiny btn-add" onclick="openTopUp()">+</button>
         </div>
       </div>
+      <div id="bet-modal" class="modal-overlay">
+        <div class="modal-box" style="border-color: gold">
+          <h3 style="color: gold">GANTI TARUHAN</h3>
+          <input
+            type="number"
+            id="manual-bet-input"
+            style="
+              width: 100%;
+              padding: 10px;
+              margin: 10px 0;
+              background: #222;
+              border: 1px solid #555;
+              color: white;
+              border-radius: 5px;
+            "
+            placeholder="Jumlah Taruhan..."
+          />
+          <button
+            class="modal-btn"
+            onclick="setManualBet()"
+            style="background: gold; color: black; font-weight: bold"
+          >
+            SET TARUHAN
+          </button>
+          <button
+            class="modal-btn"
+            onclick="closeModals()"
+            style="background: #555"
+          >
+            Batal
+          </button>
+        </div>
+      </div>
       <div class="info-group">
         <div class="label">TARUHAN</div>
         <div class="val-box">
-          <button class="btn-tiny" onclick="changeBet(-200)">-</button
-          ><span id="bet">200</span
-          ><button class="btn-tiny" onclick="changeBet(200)">+</button>
+          <button class="btn-tiny" onclick="changeBet(-200)">-</button>
+          <span id="bet">200</span>
+          <button class="btn-tiny" onclick="changeBet(200)">+</button>
+          <button
+            class="btn-tiny"
+            onclick="openBetModal()"
+            style="background: #444; margin-left: 5px"
+          >
+            ✎
+          </button>
         </div>
       </div>
       <div class="spin-button" id="spin-btn" onclick="spin()">⟳</div>
@@ -582,7 +622,7 @@
       ];
 
       let balance = 5000;
-      let bet = 200;
+      let bet = 100;
       let isSpinning = false;
       let grid = [];
       let nextMode = "NORMAL";
@@ -918,9 +958,23 @@
         } catch (e) {}
       }
 
+      function openBetModal() {
+        document.getElementById("bet-modal").style.display = "flex";
+        document.getElementById("manual-bet-input").value = bet; // Isi dengan taruhan saat ini
+      }
+
+      function setManualBet() {
+        const input = document.getElementById("manual-bet-input");
+        const val = parseInt(input.value);
+
+        if (!val || val <= 0) return alert("Jumlah taruhan tidak valid!");
+        if (val > balance) return alert("Saldo tidak cukup!");
+
+        bet = val;
+        updateUI();
+        closeModals();
+      }
       init();
     </script>
   </body>
 </html>
-
-
