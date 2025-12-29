@@ -6,7 +6,7 @@
 const CONFIG = {
   startingBalance: 0, // Saldo Awal (Rp)
   betAmount: 10000, // Biaya sekali putar (Rp)
-  spinSpeed: 5000, // Lama putaran mesin (ms) - 2000 artinya 2 detik
+  spinSpeed: 7000, // Lama putaran mesin (ms) - 2000 artinya 2 detik
 };
 
 // --- 2. DAFTAR HADIAH (Berapa kali lipat kemenangannya) ---
@@ -29,11 +29,11 @@ const PAYOUTS = {
 
 const GAME_SCENARIOS = [
   { type: "win", msg: "Wih hoki pemula!" }, // Menang 1x
-  { type: "win", msg: "gacor" }, // Kalah 2
+  { type: "jackpot", msg: "gacor" }, // Kalah 2
   { type: "win", msg: "gacor" }, // Kalah 1
-  { type: "win", msg: "gacoor" }, // Kalah 4
+  { type: "jackpot", msg: "gacoor" }, // Kalah 4
   { type: "win", msg: "gacor" }, // Kalah 3
-  { type: "win", msg: "gacor" }, // Kalah 5
+  { type: "jackpot", msg: "gacor" }, // Kalah 5
   // ... copy paste terus sampai dia bangkrut
 ];
 
