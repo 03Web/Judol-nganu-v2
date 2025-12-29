@@ -6,9 +6,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Gates of Nganu - Cascade Effect</title>
+    <title>Gates of Nganu - Mobile Optimized</title>
     <style>
-      /* --- CSS: TAMPILAN & ANIMASI --- */
+      /* --- CSS: GLOBAL & DESKTOP --- */
       @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Roboto:wght@500&display=swap");
 
       :root {
@@ -43,17 +43,19 @@
         z-index: -1;
       }
 
-      /* Layout Utama */
+      /* Container Utama */
       .main-interface {
         display: flex;
         width: 98%;
         max-width: 1200px;
-        height: 85vh;
+        height: 90vh;
         gap: 10px;
         align-items: center;
         justify-content: center;
+        position: relative;
       }
 
+      /* Panel Samping (Desktop) */
       .side-panel {
         flex: 1;
         display: flex;
@@ -76,6 +78,11 @@
       }
 
       /* ZEUS */
+      .zeus-wrapper {
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
       .zeus-avatar {
         width: 140px;
         height: 140px;
@@ -104,14 +111,29 @@
         box-shadow: 0 0 50px cyan, 0 0 80px white;
         animation: shakeZeus 0.5s ease-in-out;
       }
+      @keyframes shakeZeus {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        75% {
+          transform: translateX(10px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
 
-      /* GRID GAME */
+      /* GAME AREA */
       .game-area {
         flex: 3;
         display: flex;
         flex-direction: column;
         align-items: center;
         max-width: 600px;
+        z-index: 10;
       }
 
       .top-bar {
@@ -151,9 +173,7 @@
         transition: transform 0.1s;
       }
 
-      /* --- ANIMASI RUNTUHAN SATU PER SATU --- */
-
-      /* 1. Efek Jatuh Membal (Gravity) */
+      /* Animasi */
       .anim-drop {
         animation: bounceIn 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
       }
@@ -166,18 +186,10 @@
           opacity: 1;
           transform: translateY(25px);
         }
-        75% {
-          transform: translateY(-10px);
-        }
-        90% {
-          transform: translateY(5px);
-        }
         100% {
           transform: translateY(0);
         }
       }
-
-      /* 2. Efek Pecah (Explode) */
       .anim-explode {
         animation: implode 0.3s forwards ease-in;
         z-index: 10;
@@ -187,21 +199,51 @@
           transform: scale(1);
           filter: brightness(2);
         }
-        50% {
-          transform: scale(1.2);
-          opacity: 1;
-        }
         100% {
           transform: scale(0);
           opacity: 0;
         }
       }
-
-      /* 3. Efek Highlight Menang */
       .anim-win-border {
         border: 2px solid white !important;
         box-shadow: 0 0 15px white, inset 0 0 10px gold;
         z-index: 5;
+      }
+
+      /* Multiplier */
+      .multiplier-orb {
+        border-radius: 50%;
+        width: 85%;
+        height: 85%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 900;
+        font-size: 0.9rem;
+        color: white;
+        border: 2px solid white;
+        box-shadow: 0 0 10px currentColor;
+        animation: spinOrb 3s infinite linear;
+      }
+      @keyframes spinOrb {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .orb-green {
+        background: #00c853;
+        color: #b9f6ca;
+      }
+      .orb-purple {
+        background: #aa00ff;
+        color: #ea80fc;
+      }
+      .orb-red {
+        background: #d50000;
+        color: #ff8a80;
       }
 
       /* CONTROL BAR */
@@ -241,13 +283,14 @@
         background: #333;
         border: 1px solid #555;
         color: white;
-        width: 25px;
-        height: 25px;
-        border-radius: 4px;
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 1.2rem;
       }
       .btn-add {
         background: #1b5e20;
@@ -256,11 +299,11 @@
 
       .spin-button {
         background: radial-gradient(circle, #ffeb3b, #f57f17);
-        width: 70px;
-        height: 70px;
+        width: 75px;
+        height: 75px;
         border-radius: 50%;
         border: 4px solid #fff59d;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         font-weight: 900;
         color: #3e2723;
         cursor: pointer;
@@ -274,43 +317,7 @@
         cursor: not-allowed;
       }
 
-      /* Multiplier Orb */
-      .multiplier-orb {
-        border-radius: 50%;
-        width: 80%;
-        height: 80%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: 900;
-        font-size: 1rem;
-        color: white;
-        border: 2px solid white;
-        box-shadow: 0 0 10px currentColor;
-        animation: spinOrb 3s infinite linear;
-      }
-      @keyframes spinOrb {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      .orb-green {
-        background: #00c853;
-        color: #b9f6ca;
-      }
-      .orb-red {
-        background: #d50000;
-        color: #ff8a80;
-      }
-      .orb-purple {
-        background: #aa00ff;
-        color: #ea80fc;
-      }
-
-      /* MODAL */
+      /* MODALS & ADMIN */
       .modal-overlay {
         display: none;
         position: fixed;
@@ -318,7 +325,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.85);
         z-index: 200;
         justify-content: center;
         align-items: center;
@@ -328,54 +335,118 @@
         background: #1a0000;
         border: 2px solid var(--gold);
         padding: 20px;
-        border-radius: 10px;
-        width: 300px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 320px;
         text-align: center;
         color: white;
-        box-shadow: 0 0 20px var(--gold);
       }
       .modal-btn {
         background: #333;
         color: white;
-        padding: 10px;
-        margin: 5px;
+        padding: 12px;
+        margin: 5px 0;
         border: 1px solid #555;
         cursor: pointer;
         width: 100%;
-        border-radius: 5px;
+        border-radius: 8px;
+        font-weight: bold;
       }
-
-      /* ADMIN TRIGGER (GEAR) */
       .admin-trigger {
         position: fixed;
-        bottom: 85px;
+        bottom: 100px;
         right: 20px;
         background: rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.5);
-        width: 40px;
-        height: 40px;
+        color: rgba(255, 255, 255, 0.3);
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 24px;
+        font-size: 20px;
         cursor: pointer;
         border: 1px dashed #555;
-        z-index: 101;
-      }
-      .admin-trigger:hover {
-        background: rgba(255, 255, 255, 0.3);
-        color: white;
+        z-index: 99;
       }
 
-      /* Responsive */
+      /* --- MOBILE SPECIFIC CSS (LAYOUT BARU) --- */
       @media (max-width: 768px) {
-        .side-panel {
-          display: none;
+        .main-interface {
+          flex-direction: column; /* Tumpuk vertikal */
+          justify-content: flex-start;
+          padding-top: 10px;
+          height: 100vh;
         }
+
+        /* 1. Header Mobile (Logo Kiri, Zeus Kanan) */
+        .side-panel {
+          flex: none; /* Jangan stretch */
+          width: 100%;
+          flex-direction: row;
+          justify-content: space-between;
+          padding: 0 15px;
+          margin-bottom: 5px;
+        }
+
+        /* Logo diperkecil */
+        .logo-area h1 {
+          font-size: 1.2rem;
+          text-align: left;
+        }
+        .highlight {
+          font-size: 1.5rem;
+        }
+
+        /* Zeus dipindah ke pojok kanan atas (Mini) */
+        .side-panel:last-child {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: auto;
+          pointer-events: none; /* Biar gak nutupin klik */
+        }
+        .zeus-avatar {
+          width: 70px;
+          height: 70px;
+          font-size: 2.5rem;
+          border-width: 2px;
+        }
+        .zeus-body {
+          display: none; /* Badan diumpetin biar muat */
+        }
+
+        /* 2. Grid Full Width */
         .game-area {
           width: 100%;
-          margin-bottom: 80px;
+          margin-top: 40px;
+        }
+        .slot-grid {
+          width: 95vw; /* Lebar hampir penuh layar HP */
+          max-width: 400px;
+          gap: 3px; /* Jarak antar kotak dirapatkan */
+        }
+        .grid-cell {
+          font-size: 1.4rem;
+          border-radius: 5px;
+        }
+
+        /* 3. Controls */
+        .control-bar {
+          padding: 10px 10px 20px 10px;
+        }
+        .val-box {
+          font-size: 1rem;
+        }
+        .btn-tiny {
+          width: 35px;
+          height: 35px;
+        } /* Tombol gedean biar enak dipencet */
+
+        /* Sembunyikan elemen hiasan gak penting di HP */
+        .side-panel:first-child .feature-card,
+        .side-panel:first-child .toggle-active {
+          display: none;
         }
       }
     </style>
@@ -386,7 +457,7 @@
     <div class="main-interface">
       <div class="side-panel">
         <div class="logo-area">
-          <h1>GATES OF<br /><span class="highlight">Nganu</span></h1>
+          <h1>JUDOL OF<br /><span class="highlight">NGANU</span></h1>
         </div>
       </div>
 
@@ -404,7 +475,7 @@
       </div>
 
       <div class="side-panel">
-        <div id="zeus-anim">
+        <div class="zeus-wrapper" id="zeus-anim">
           <div class="zeus-avatar">👴🏻</div>
           <div class="zeus-body"></div>
         </div>
@@ -413,7 +484,7 @@
 
     <div class="control-bar">
       <div class="info-group">
-        <div class="label">SALDO (RP)</div>
+        <div class="label">SALDO</div>
         <div class="val-box">
           <span id="balance">100.000</span
           ><button class="btn-tiny btn-add" onclick="openTopUp()">+</button>
@@ -432,7 +503,7 @@
 
     <div id="topup-modal" class="modal-overlay">
       <div class="modal-box" style="border-color: #0f0">
-        <h3 style="color: #0f0">💸 ISI SALDO 💸</h3>
+        <h3 style="color: #0f0">💸 ISI SALDO</h3>
         <button class="modal-btn" onclick="addBalance(100000)">
           Rp 100.000
         </button>
@@ -445,24 +516,25 @@
           style="
             width: 100%;
             padding: 10px;
-            margin-top: 10px;
+            margin: 10px 0;
             background: #222;
             border: 1px solid #555;
             color: white;
+            border-radius: 5px;
           "
-          placeholder="Manual Input..."
+          placeholder="Input Manual..."
         />
         <button
           class="modal-btn"
           onclick="addManualBalance()"
-          style="background: #00c853; color: black; font-weight: bold"
+          style="background: #00c853; color: black"
         >
           ISI MANUAL
         </button>
         <button
           class="modal-btn"
           onclick="closeModals()"
-          style="background: #500"
+          style="background: #555"
         >
           Batal
         </button>
@@ -471,7 +543,7 @@
 
     <div id="admin-modal" class="modal-overlay">
       <div class="modal-box" style="border-color: red">
-        <h3 style="color: red">⚙️ ADMIN SETTING</h3>
+        <h3 style="color: red">⚙️ ADMIN MENU</h3>
         <button class="modal-btn" onclick="setMode('NORMAL')">
           Normal (Acak)
         </button>
@@ -494,9 +566,7 @@
       </div>
     </div>
 
-    <div class="admin-trigger" onclick="openAdmin()" title="Admin Setting">
-      ⚙️
-    </div>
+    <div class="admin-trigger" onclick="openAdmin()">⚙️</div>
 
     <script>
       const SYMBOLS = [
@@ -511,7 +581,7 @@
         { id: 8, char: "👑", val: 50.0, c: "sym-high" },
       ];
 
-      let balance =3000;
+      let balance = 5000;
       let bet = 200;
       let isSpinning = false;
       let grid = [];
@@ -574,8 +644,7 @@
         return { type: "mult", val: val, char: val + "x", css: css };
       }
 
-      // Render dengan opsi animasi drop (class 'anim-drop')
-      function renderGrid(animateDrop = true, specificCoords = []) {
+      function renderGrid(animateDrop = true) {
         const el = document.getElementById("grid");
         el.innerHTML = "";
         for (let r = 0; r < 5; r++) {
@@ -584,11 +653,7 @@
             cell.className = "grid-cell";
             cell.id = `c-${c}-${r}`;
 
-            // Kalau animateDrop true, semua dikasih animasi jatuh
-            // Kalau specificCoords ada, cek apakah koordinat ini yang harus jatuh
-            if (animateDrop) {
-              cell.classList.add("anim-drop");
-            }
+            if (animateDrop) cell.classList.add("anim-drop");
 
             let s = grid[c][r];
             if (s) {
@@ -620,7 +685,6 @@
 
         playSound("spin");
 
-        // Visual Shuffle
         let shuffleCount = 0;
         let spinInterval = setInterval(() => {
           let tempGrid = [];
@@ -653,7 +717,7 @@
 
       function finalizeSpin() {
         fillGrid(true);
-        renderGrid(true); // Drop animation saat berhenti
+        renderGrid(true);
         processWin(0);
       }
 
@@ -689,7 +753,6 @@
           wd.style.color = "gold";
           playSound("win");
 
-          // 1. HIGHLIGHT (KEDIP)
           winCoords.forEach((p) => {
             let cell = document.getElementById(`c-${p.c}-${p.r}`);
             if (cell) {
@@ -698,7 +761,6 @@
             }
           });
 
-          // 2. PECAH SATU PER SATU (CASCADE)
           setTimeout(() => {
             let delay = 0;
             winCoords.forEach((p, index) => {
@@ -706,18 +768,17 @@
                 let cell = document.getElementById(`c-${p.c}-${p.r}`);
                 if (cell) cell.classList.add("anim-explode");
               }, delay);
-              delay += 50; // Delay antar ledakan (biar kayak celetuk-celetuk)
+              delay += 50;
             });
 
-            // 3. SETELAH SEMUA PECAH -> RUNTUH
             setTimeout(() => {
               winCoords.forEach((p) => (grid[p.c][p.r] = null));
               gravity();
               refill();
-              renderGrid(true); // Semua jatuh lagi
+              renderGrid(true);
               processWin(currentWin);
-            }, delay + 400); // Tunggu ledakan selesai
-          }, 500); // Tunggu highlight selesai
+            }, delay + 400);
+          }, 500);
         } else {
           finishRound(currentWin);
         }
@@ -861,3 +922,5 @@
     </script>
   </body>
 </html>
+
+
