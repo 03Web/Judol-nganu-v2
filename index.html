@@ -194,20 +194,32 @@
         animation: implode 0.3s forwards ease-in;
         z-index: 10;
       }
-      @keyframes implode {
+
+      @keyframes kedipGacor {
         0% {
+          opacity: 1;
           transform: scale(1);
-          filter: brightness(2);
+          border-color: white;
+        }
+        50% {
+          opacity: 0.2;
+          transform: scale(0.95);
+          border-color: gold;
         }
         100% {
-          transform: scale(0);
-          opacity: 0;
+          opacity: 1;
+          transform: scale(1);
+          border-color: white;
         }
       }
+
       .anim-win-border {
-        border: 2px solid white !important;
-        box-shadow: 0 0 15px white, inset 0 0 10px gold;
+        border: 3px solid white !important;
+        box-shadow: 0 0 20px white, inset 0 0 10px gold;
         z-index: 5;
+        background: rgba(255, 215, 0, 0.2);
+
+        animation: kedipGacor 0.4s infinite;
       }
 
       /* Multiplier */
@@ -808,7 +820,7 @@
                 let cell = document.getElementById(`c-${p.c}-${p.r}`);
                 if (cell) cell.classList.add("anim-explode");
               }, delay);
-              delay += 50;
+              delay += 300;
             });
 
             setTimeout(() => {
@@ -817,7 +829,7 @@
               refill();
               renderGrid(true);
               processWin(currentWin);
-            }, delay + 400);
+            }, delay + 1000);
           }, 500);
         } else {
           finishRound(currentWin);
