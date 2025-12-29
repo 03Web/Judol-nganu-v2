@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vegas Slot Simulation</title>
+    <style>
+      /* --- CSS: DESAIN TAMPILAN --- */
+      body {
+        background-color: #0f0f0f; /* Latar belakang gelap */
+        color: #d4af37; /* Warna Emas */
+        font-family: "Arial", sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        border: 2px solid #d4af37;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        background: #1a1a1a;
+      }
+
+      h1 {
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      /* Mesin Slot */
+      .slot-machine {
+        background-color: #000;
+        border: 5px solid #333;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 20px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-around;
+        background: #222;
+        padding: 10px;
+      }
+
+      .symbol {
+        font-size: 3rem;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+      }
+
+      /* Highlight baris tengah (Payline) */
+      .payline {
+        border: 2px solid #ff0000;
+        background: #2a0000;
+        box-shadow: inset 0 0 10px red;
+      }
+
+      /* Panel Kontrol */
+      .controls {
+        margin-top: 20px;
+        background: #222;
+        padding: 15px;
+        border-radius: 10px;
+      }
+
+      input[type="number"] {
+        padding: 10px;
+        font-size: 1.2rem;
+        width: 100px;
+        background: #333;
+        color: white;
+        border: 1px solid #d4af37;
+        text-align: center;
+      }
+
+      button {
+        padding: 10px 30px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .btn-spin {
+        background: linear-gradient(45deg, #d4af37, #f9d976);
+        color: #000;
+        box-shadow: 0 0 10px #d4af37;
+      }
+
+      .btn-spin:active {
+        transform: scale(0.95);
+      }
+      .btn-spin:disabled {
+        background: #555;
+        cursor: not-allowed;
+      }
+
+      .btn-reset {
+        background: #444;
+        color: #fff;
+        font-size: 0.8rem;
+        margin-top: 10px;
+      }
+
+      .message {
+        margin-top: 20px;
+        font-size: 1.5rem;
+        min-height: 40px;
+        font-weight: bold;
+      }
+
+      .win-anim {
+        color: #00ff00;
+        animation: flash 0.5s infinite;
+      }
+
+      @keyframes flash {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Royal Slot 777</h1>
+      <div class="balance-display">
+        Saldo: $<span id="balance">{{ balance }}</span>
+      </div>
+
+      <div class="slot-machine">
+        <div class="row" id="row1">
+          <div class="symbol">❓</div>
+          <div class="symbol">❓</div>
+          <div class="symbol">❓</div>
+        </div>
+        <div class="row payline" id="row2">
+          <div class="symbol">❓</div>
+          <div class="symbol">❓</div>
+          <div class="symbol">❓</div>
+        </div>
+        <div class="row" id="row3">
+          <div class="symbol">❓</div>
+          <div class="symbol">❓</div>
+          <div class="symbol">❓</div>
+        </div>
+      </div>
+
+      <div class="message" id="message">Siap Bermain?</div>
+
+      <div class="controls">
+        <label>Taruhan: $</label>
+        <input type="number" id="betAmount" value="10" min="1" />
+        <br /><br />
+        <button class="btn-spin" onclick="spinSlot()">PUTAR</button>
+        <br />
+        <button class="btn-reset" onclick="resetGame()">
+          Isi Ulang Saldo (Demo)
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // --- JAVASCRIPT: LOGIKA CLIENT-SIDE ---
+
+      async function spinSlot() {
+        const betInput = document.getElementById("betAmount");
+        const messageEl = document.getElementById("message");
+        const btn = document.querySelector(".btn-spin");
+
+        const bet = betInput.value;
+
+        // 1. Mulai Animasi
+        btn.disabled = true;
+        messageEl.innerText = "Memutar...";
+        messageEl.className = "message";
+
+        // Animasi dummy (ikon berubah-ubah)
+        let interval = setInterval(() => {
+          const randomSym = ["🍒", "🍋", "🔔", "💎", "7️⃣"];
+          document.querySelectorAll(".symbol").forEach((el) => {
+            el.innerText =
+              randomSym[Math.floor(Math.random() * randomSym.length)];
+          });
+        }, 100);
+
+        try {
+          // 2. Kirim Permintaan ke Server
+          const response = await fetch("/spin", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `bet=${bet}`,
+          });
+
+          // Cek apakah server error (Misal error 500)
+          if (!response.ok) {
+            throw new Error(`Server Error: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // 3. Update Tampilan Sesuai Jawaban Server
+          if (data.status === "error") {
+            messageEl.innerText = data.message;
+            messageEl.style.color = "red";
+          } else {
+            updateRow("row1", data.rows[0]);
+            updateRow("row2", data.rows[1]);
+            updateRow("row3", data.rows[2]);
+            document.getElementById("balance").innerText = data.balance;
+
+            if (data.is_win) {
+              messageEl.innerText = `JACKPOT! MENANG $${data.winnings}`;
+              messageEl.className = "message win-anim";
+            } else {
+              messageEl.innerText = "Coba lagi!";
+              messageEl.style.color = "white";
+            }
+          }
+        } catch (error) {
+          // Jika server mati/error, akan masuk ke sini
+          console.error("Error:", error);
+          messageEl.innerText = "Server Error! Cek Terminal.";
+          messageEl.style.color = "red";
+        } finally {
+          // 4. BAGIAN PENTING: Matikan animasi apapun yang terjadi
+          clearInterval(interval);
+          btn.disabled = false;
+        }
+      }
+
+      async function resetGame() {
+        const response = await fetch("/reset", { method: "POST" });
+        const data = await response.json();
+        document.getElementById("balance").innerText = data.balance;
+        document.getElementById("message").innerText = "Saldo Diisi Ulang!";
+        document.getElementById("message").className = "message";
+      }
+    </script>
+  </body>
+</html>
