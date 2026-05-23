@@ -9,7 +9,7 @@
     <title>Gates of Nganu - Edukasi Simulasi</title>
     <style>
       /* --- CSS: GLOBAL & DESKTOP --- */
-      @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Roboto:wght@500&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Roboto:wght@500;700;900&display=swap");
 
       :root {
         --gold: #ffd700;
@@ -35,12 +35,20 @@
         align-items: center;
       }
 
+      /* Premium Background */
       .world-bg {
         position: absolute;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle at center, #4a1060 0%, #150020 80%);
+        background: linear-gradient(200deg, #150020, #4a1060, #2c0042, #150020);
+        background-size: 400% 400%;
+        animation: bgPan 15s ease infinite;
         z-index: -1;
+      }
+      @keyframes bgPan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
 
       /* Container Utama */
@@ -49,7 +57,7 @@
         width: 98%;
         max-width: 1200px;
         height: 90vh;
-        gap: 10px;
+        gap: 15px;
         align-items: center;
         justify-content: center;
         position: relative;
@@ -65,65 +73,62 @@
 
       .logo-area h1 {
         font-family: "Cinzel", serif;
-        font-size: 1.8rem;
+        font-size: 2rem;
         text-align: center;
-        text-shadow: 0 0 10px var(--gold);
+        text-shadow: 0 0 15px var(--gold), 0 0 5px white;
         line-height: 1.2;
         margin: 0;
       }
       .highlight {
         color: var(--gold);
-        font-size: 2.2rem;
+        font-size: 2.6rem;
       }
 
-      /* ZEUS */
+      /* ZEUS ANIMATION */
       .zeus-wrapper {
         position: relative;
         display: flex;
         justify-content: center;
+        animation: float 4s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
       }
       .zeus-avatar {
-        width: 140px;
-        height: 140px;
-        background: radial-gradient(circle at 30% 30%, #fff, #e0e0e0);
+        width: 150px;
+        height: 150px;
+        background: radial-gradient(circle at 30% 30%, #fff, #b8860b);
         border-radius: 50%;
         border: 4px solid var(--gold);
-        box-shadow: 0 0 30px var(--gold-glow);
+        box-shadow: 0 0 30px var(--gold-glow), inset 0 0 20px #000;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 4rem;
+        font-size: 4.5rem;
         position: relative;
         z-index: 2;
-        transition: transform 0.2s;
+        transition: transform 0.2s, box-shadow 0.2s;
       }
       .zeus-body {
-        width: 100px;
+        width: 110px;
         height: 80px;
-        background: linear-gradient(to bottom, #fff, #bbb);
+        background: linear-gradient(to bottom, #ffd700, #8b6508);
         border-radius: 40% 40% 0 0;
         margin-top: -20px;
         z-index: 1;
-        opacity: 0.8;
+        box-shadow: 0 0 15px var(--gold);
       }
       .zeus-strike .zeus-avatar {
-        box-shadow: 0 0 50px cyan, 0 0 80px white;
-        animation: shakeZeus 0.5s ease-in-out;
-        filter: brightness(1.5);
+        box-shadow: 0 0 60px cyan, 0 0 100px white;
+        animation: shakeZeus 0.4s cubic-bezier(.36,.07,.19,.97) both;
+        filter: brightness(1.8);
       }
       @keyframes shakeZeus {
-        0% {
-          transform: translateX(0) rotate(0);
-        }
-        25% {
-          transform: translateX(-15px) rotate(-10deg);
-        }
-        75% {
-          transform: translateX(15px) rotate(10deg);
-        }
-        100% {
-          transform: translateX(0) rotate(0);
-        }
+        10%, 90% { transform: translate3d(-2px, 0, 0); }
+        20%, 80% { transform: translate3d(4px, 0, 0); }
+        30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+        40%, 60% { transform: translate3d(8px, 0, 0); }
       }
 
       /* GAME AREA */
@@ -137,105 +142,79 @@
       }
 
       .top-bar {
-        background: rgba(0, 0, 0, 0.6);
-        padding: 5px 20px;
-        border-radius: 10px;
-        border: 1px solid var(--gold);
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        padding: 8px 25px;
+        border-radius: 12px;
+        border: 2px solid var(--gold);
         text-align: center;
-        margin-bottom: 10px;
-        min-width: 200px;
-        box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        margin-bottom: 12px;
+        min-width: 250px;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
       }
 
+      /* GLASSMORPHISM GRID */
       .slot-grid {
         display: grid;
         grid-template-columns: repeat(6, 1fr);
         grid-template-rows: repeat(5, 1fr);
-        gap: 5px;
+        gap: 6px;
         width: 100%;
         aspect-ratio: 6/5;
-        background: rgba(0, 0, 0, 0.6);
+        background: rgba(20, 0, 30, 0.7);
+        backdrop-filter: blur(10px);
         border: 4px solid var(--gold);
         border-radius: 15px;
-        padding: 8px;
-        box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        padding: 10px;
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(0,0,0,0.8);
         position: relative;
       }
 
       .grid-cell {
-        background: linear-gradient(145deg, #2b1d36, #1a0f24);
-        border: 1px solid #4a3b5a;
-        border-radius: 8px;
+        background: linear-gradient(145deg, #3d2352, #201130);
+        border: 1px solid #6b4c8a;
+        border-radius: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 1.8rem;
+        font-size: 2rem;
         position: relative;
         transform: scale(1);
         transition: transform 0.1s, filter 0.1s;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.8), 0 4px 6px rgba(0,0,0,0.4);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
       }
 
-      /* --- ANIMASI BARU YANG LEBIH SMOOTH --- */
-
-      /* Animasi Drop (Staggered) */
+      /* --- ANIMASI --- */
       .anim-drop {
-        animation: bounceIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275)
-          backwards;
+        animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
       }
-
       @keyframes bounceIn {
-        0% {
-          opacity: 0;
-          transform: translateY(-400px);
-        }
-        60% {
-          opacity: 1;
-          transform: translateY(20px);
-        }
-        100% {
-          transform: translateY(0);
-        }
+        0% { opacity: 0; transform: translateY(-400px) scale(0.8); }
+        60% { opacity: 1; transform: translateY(15px) scale(1.05); }
+        100% { transform: translateY(0) scale(1); }
       }
 
-      /* Animasi Highlight Menang (Kedip Cepat) */
       .anim-win-border {
         border: 2px solid white !important;
-        box-shadow: inset 0 0 20px gold, 0 0 15px white;
+        box-shadow: inset 0 0 30px gold, 0 0 20px white !important;
         z-index: 5;
         animation: pulseWinner 0.3s infinite alternate;
       }
       @keyframes pulseWinner {
-        0% {
-          transform: scale(1);
-          filter: brightness(1);
-        }
-        100% {
-          transform: scale(1.05);
-          filter: brightness(1.3);
-        }
+        0% { transform: scale(1); filter: brightness(1); }
+        100% { transform: scale(1.1); filter: brightness(1.5); }
       }
 
-      /* Animasi Pecah (Explode) */
       .anim-explode {
-        animation: popOut 0.5s forwards ease-in;
+        animation: popExplode 0.4s forwards ease-in;
       }
-      @keyframes popOut {
-        0% {
-          transform: scale(1.1);
-          opacity: 1;
-        }
-        50% {
-          transform: scale(1.3);
-          opacity: 0.8;
-          filter: contrast(200%);
-        }
-        100% {
-          transform: scale(0);
-          opacity: 0;
-        }
+      @keyframes popExplode {
+        0% { transform: scale(1.1); filter: brightness(1.5); }
+        40% { transform: scale(1.4); filter: brightness(2.5); text-shadow: 0 0 30px white; }
+        100% { transform: scale(0); opacity: 0; filter: brightness(0); }
       }
 
-      /* Multiplier Orb Spin */
       .multiplier-orb {
         border-radius: 50%;
         width: 85%;
@@ -244,32 +223,20 @@
         justify-content: center;
         align-items: center;
         font-weight: 900;
-        font-size: 0.9rem;
+        font-size: 1rem;
         color: white;
         border: 2px solid white;
-        box-shadow: 0 0 10px currentColor;
-        animation: spinOrb 3s infinite linear;
+        box-shadow: 0 0 15px currentColor, inset 0 0 10px rgba(255,255,255,0.5);
+        animation: pulseOrb 1.5s infinite alternate;
+        text-shadow: 1px 1px 2px black;
       }
-      @keyframes spinOrb {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
+      @keyframes pulseOrb {
+        0% { transform: scale(0.95); box-shadow: 0 0 10px currentColor; }
+        100% { transform: scale(1.05); box-shadow: 0 0 25px currentColor; }
       }
-      .orb-green {
-        background: #00c853;
-        color: #b9f6ca;
-      }
-      .orb-purple {
-        background: #aa00ff;
-        color: #ea80fc;
-      }
-      .orb-red {
-        background: #d50000;
-        color: #ff8a80;
-      }
+      .orb-green { background: radial-gradient(circle at 30% 30%, #00e676, #008b3b); color: #b9f6ca; }
+      .orb-purple { background: radial-gradient(circle at 30% 30%, #d500f9, #7a008c); color: #ea80fc; }
+      .orb-red { background: radial-gradient(circle at 30% 30%, #ff1744, #990022); color: #ff8a80; }
 
       /* CONTROL BAR */
       .control-bar {
@@ -277,128 +244,185 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        border-top: 2px solid #333;
-        padding: 10px 15px;
+        background: rgba(10, 0, 15, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 2px solid #4a1060;
+        padding: 15px 25px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         z-index: 100;
+        box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
       }
       .info-group {
         display: flex;
         flex-direction: column;
-        gap: 2px;
+        gap: 4px;
       }
       .label {
-        font-size: 0.7rem;
-        color: #aaa;
+        font-size: 0.75rem;
+        color: #b08bbd;
+        letter-spacing: 1px;
+        font-weight: bold;
       }
       .val-box {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         color: white;
-        font-weight: bold;
+        font-weight: 900;
         font-family: monospace;
-        font-size: 1.1rem;
+        font-size: 1.3rem;
+        text-shadow: 0 0 5px rgba(255,255,255,0.3);
       }
       .btn-tiny {
-        background: #333;
-        border: 1px solid #555;
+        background: linear-gradient(180deg, #444, #222);
+        border: 1px solid #666;
         color: white;
-        width: 30px;
-        height: 30px;
-        border-radius: 5px;
+        width: 35px;
+        height: 35px;
+        border-radius: 8px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+        transition: transform 0.1s, background 0.2s;
+      }
+      .btn-tiny:active {
+        transform: translateY(2px);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.5);
       }
       .btn-add {
-        background: #1b5e20;
-        border-color: #2e7d32;
+        background: linear-gradient(180deg, #00c853, #007e33);
+        border-color: #00e676;
       }
       .spin-button {
-        background: radial-gradient(circle, #ffeb3b, #f57f17);
-        width: 75px;
-        height: 75px;
+        background: radial-gradient(circle, #ffeb3b, #ff9100);
+        width: 85px;
+        height: 85px;
         border-radius: 50%;
-        border: 4px solid #fff59d;
-        font-size: 1.8rem;
+        border: 5px solid #fff59d;
+        font-size: 2rem;
         font-weight: 900;
         color: #3e2723;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), inset 0 -5px 15px rgba(0,0,0,0.3);
         transition: transform 0.1s;
+        text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
       }
       .spin-button:active {
         transform: scale(0.9);
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), inset 0 5px 15px rgba(0,0,0,0.5);
       }
       .spin-disabled {
-        filter: grayscale(1);
+        filter: grayscale(1) brightness(0.5);
         cursor: not-allowed;
-        animation: none;
+        pointer-events: none;
       }
 
-      /* --- BIG WIN MODAL (NEW) --- */
+      /* EDU WARNING MODAL */
+      .edu-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(10px);
+      }
+      .edu-box {
+        background: linear-gradient(145deg, #2a0000, #110000);
+        border: 2px solid #ff1744;
+        padding: 30px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 0 50px rgba(255, 0, 0, 0.3);
+        animation: zoomIn 0.5s ease-out;
+      }
+      .edu-title {
+        color: #ff1744;
+        font-family: 'Cinzel', serif;
+        font-size: 1.8rem;
+        margin-top: 0;
+        text-shadow: 0 0 10px red;
+      }
+      .edu-box p {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        margin-bottom: 15px;
+        color: #ddd;
+      }
+      .edu-btn {
+        background: linear-gradient(180deg, #ff1744, #b71c1c);
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+        box-shadow: 0 5px 15px rgba(255,0,0,0.4);
+        transition: transform 0.2s;
+      }
+      .edu-btn:active {
+        transform: scale(0.95);
+      }
+
+      /* --- BIG WIN MODAL --- */
       .big-win-overlay {
         display: none;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.85);
         z-index: 999;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
-        animation: fadeIn 0.5s;
       }
       .big-win-text {
         font-family: "Cinzel", serif;
-        font-size: 3.5rem;
+        font-size: 4rem;
         color: #ffd700;
         text-transform: uppercase;
-        text-shadow: 0 0 20px red, 0 0 50px orange;
-        animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-shadow: 0 0 20px red, 0 0 50px orange, 0 0 100px yellow;
+        animation: zoomInBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
       .big-win-amount {
         font-family: "Roboto", sans-serif;
-        font-size: 3rem;
+        font-size: 3.5rem;
         font-weight: 900;
         color: white;
         margin-top: 20px;
-        text-shadow: 0 0 10px #00e676;
+        text-shadow: 0 0 20px #00e676;
+        animation: slideUp 0.5s ease-out 0.3s both;
       }
-      @keyframes zoomIn {
-        0% {
-          transform: scale(0);
-          opacity: 0;
-        }
-        80% {
-          transform: scale(1.1);
-          opacity: 1;
-        }
-        100% {
-          transform: scale(1);
-        }
+      @keyframes zoomInBounce {
+        0% { transform: scale(0); opacity: 0; }
+        80% { transform: scale(1.1); opacity: 1; }
+        100% { transform: scale(1); }
+      }
+      @keyframes slideUp {
+        0% { transform: translateY(50px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
       }
 
-      /* MODALS (OLD) */
+      /* MODALS */
       .modal-overlay {
         display: none;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0; width: 100%; height: 100%;
         background: rgba(0, 0, 0, 0.85);
         z-index: 200;
         justify-content: center;
@@ -406,38 +430,40 @@
         backdrop-filter: blur(5px);
       }
       .modal-box {
-        background: #1a0000;
+        background: linear-gradient(145deg, #222, #111);
         border: 2px solid var(--gold);
-        padding: 20px;
+        padding: 25px;
         border-radius: 15px;
         width: 90%;
-        max-width: 320px;
+        max-width: 350px;
         text-align: center;
         color: white;
+        box-shadow: 0 0 30px rgba(0,0,0,0.8);
       }
       .modal-btn {
-        background: #333;
+        background: linear-gradient(180deg, #444, #222);
         color: white;
         padding: 12px;
-        margin: 5px 0;
-        border: 1px solid #555;
+        margin: 8px 0;
+        border: 1px solid #666;
         cursor: pointer;
         width: 100%;
         border-radius: 8px;
         font-weight: bold;
+        font-size: 1.1rem;
+      }
+      .modal-btn:active {
+        transform: scale(0.98);
       }
       .admin-trigger {
         position: fixed;
-        bottom: 100px;
+        bottom: 120px;
         right: 20px;
         background: rgba(255, 255, 255, 0.1);
         color: rgba(255, 255, 255, 0.3);
-        width: 35px;
-        height: 35px;
+        width: 40px; height: 40px;
         border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: flex; justify-content: center; align-items: center;
         font-size: 20px;
         cursor: pointer;
         border: 1px dashed #555;
@@ -449,7 +475,7 @@
         .main-interface {
           flex-direction: column;
           justify-content: flex-start;
-          padding-top: 10px;
+          padding-top: 15px;
           height: 100vh;
         }
         .side-panel {
@@ -461,58 +487,54 @@
           margin-bottom: 5px;
         }
         .logo-area h1 {
-          font-size: 1.2rem;
+          font-size: 1.3rem;
           text-align: left;
         }
-        .highlight {
-          font-size: 1.5rem;
-        }
+        .highlight { font-size: 1.7rem; }
         .side-panel:last-child {
           position: absolute;
-          top: 10px;
-          right: 10px;
+          top: 15px;
+          right: 15px;
           width: auto;
           pointer-events: none;
         }
         .zeus-avatar {
-          width: 70px;
-          height: 70px;
+          width: 75px; height: 75px;
           font-size: 2.5rem;
           border-width: 2px;
         }
-        .zeus-body {
-          display: none;
-        }
+        .zeus-body { display: none; }
         .game-area {
           width: 100%;
-          margin-top: 40px;
+          margin-top: 30px;
         }
         .slot-grid {
-          width: 95vw;
-          max-width: 400px;
-          gap: 3px;
+          width: 96vw;
+          max-width: 450px;
+          gap: 4px;
         }
-        .grid-cell {
-          font-size: 1.4rem;
-          border-radius: 5px;
-        }
-        .control-bar {
-          padding: 10px 10px 20px 10px;
-        }
-        .val-box {
-          font-size: 1rem;
-        }
-        .btn-tiny {
-          width: 35px;
-          height: 35px;
-        }
-        .big-win-text {
-          font-size: 2.5rem;
-        }
+        .grid-cell { font-size: 1.6rem; border-radius: 8px; }
+        .control-bar { padding: 10px 15px 25px 15px; }
+        .val-box { font-size: 1.1rem; }
+        .btn-tiny { width: 32px; height: 32px; }
+        .spin-button { width: 70px; height: 70px; font-size: 1.5rem; }
+        .big-win-text { font-size: 2.5rem; }
+        .big-win-amount { font-size: 2rem; }
       }
     </style>
   </head>
   <body>
+    <!-- EDU WARNING MODAL -->
+    <div id="edu-warning-modal" class="edu-overlay">
+      <div class="edu-box">
+        <h2 class="edu-title">⚠️ PERINGATAN EDUKASI ⚠️</h2>
+        <p>Aplikasi ini adalah <strong>SIMULASI EDUKASI</strong> dan sama sekali tidak menggunakan uang asli.</p>
+        <p>Judi online adalah bentuk <strong>PENIPUAN</strong> yang dirancang dengan algoritma (House Edge) di mana bandar pasti selalu menang dalam jangka panjang. Kemenangan awal sengaja dirancang secara psikologis untuk memanipulasi dopamin dan membuat Anda kecanduan.</p>
+        <p>Jangan pernah bermain judi nyata. Anda tidak akan pernah bisa mengalahkan sistem komputer yang sudah diprogram untuk menyedot uang Anda.</p>
+        <button class="edu-btn" onclick="acceptWarning()">SAYA MENGERTI</button>
+      </div>
+    </div>
+
     <div class="world-bg"></div>
 
     <div class="main-interface">
@@ -524,12 +546,12 @@
 
       <div class="game-area">
         <div class="top-bar">
-          <div style="font-size: 0.7rem; color: #ccc">KEMENANGAN TUMBLE</div>
+          <div style="font-size: 0.8rem; color: #e0b0ff; font-weight: bold; letter-spacing: 1px;">KEMENANGAN TUMBLE</div>
           <div
             id="win-display"
-            style="font-size: 1.4rem; font-weight: bold; color: gold"
+            style="font-size: 1.6rem; font-weight: 900; color: #ffd700; text-shadow: 0 0 10px red;"
           >
-            0
+            Rp 0
           </div>
         </div>
         <div class="slot-grid" id="grid"></div>
@@ -546,8 +568,8 @@
     <div id="big-win-modal" class="big-win-overlay" onclick="closeBigWin()">
       <div class="big-win-text" id="win-title">SENSATIONAL</div>
       <div class="big-win-amount" id="win-amount-text">Rp 0</div>
-      <div style="color: #aaa; margin-top: 10px; font-size: 0.8rem">
-        (Ketuk untuk lanjut)
+      <div style="color: #aaa; margin-top: 15px; font-size: 1rem; animation: pulseOrb 1s infinite alternate;">
+        (Ketuk layar untuk lanjut)
       </div>
     </div>
 
@@ -562,142 +584,94 @@
 
       <div id="bet-modal" class="modal-overlay">
         <div class="modal-box" style="border-color: gold">
-          <h3 style="color: gold">GANTI TARUHAN</h3>
+          <h3 style="color: gold; font-family: 'Cinzel', serif;">GANTI TARUHAN</h3>
           <input
             type="number"
             id="manual-bet-input"
-            style="
-              width: 100%;
-              padding: 10px;
-              margin: 10px 0;
-              background: #222;
-              border: 1px solid #555;
-              color: white;
-              border-radius: 5px;
-            "
+            style="width: 100%; padding: 12px; margin: 15px 0; background: #222; border: 1px solid #555; color: white; border-radius: 8px; font-size: 1.1rem; text-align: center;"
             placeholder="Jumlah Taruhan..."
           />
-          <button
-            class="modal-btn"
-            onclick="setManualBet()"
-            style="background: gold; color: black; font-weight: bold"
-          >
+          <button class="modal-btn" onclick="setManualBet()" style="background: linear-gradient(180deg, #ffd700, #b8860b); color: black; font-weight: 900;">
             SET TARUHAN
           </button>
-          <button
-            class="modal-btn"
-            onclick="closeModals()"
-            style="background: #555"
-          >
-            Batal
-          </button>
+          <button class="modal-btn" onclick="closeModals()">Batal</button>
         </div>
       </div>
 
-      <div class="info-group">
+      <div class="info-group" style="align-items: center;">
         <div class="label">TARUHAN</div>
         <div class="val-box">
           <button class="btn-tiny" onclick="changeBet(-200)">-</button>
           <span id="bet">200</span>
           <button class="btn-tiny" onclick="changeBet(200)">+</button>
-          <button
-            class="btn-tiny"
-            onclick="openBetModal()"
-            style="background: #444; margin-left: 5px"
-          >
-            ✎
-          </button>
+          <button class="btn-tiny" onclick="openBetModal()" style="margin-left: 5px;">✎</button>
         </div>
       </div>
       <div class="spin-button" id="spin-btn" onclick="spin()">⟳</div>
     </div>
 
     <div id="topup-modal" class="modal-overlay">
-      <div class="modal-box" style="border-color: #0f0">
-        <h3 style="color: #0f0">💸 ISI SALDO</h3>
-        <button class="modal-btn" onclick="addBalance(100000)">
-          Rp 100.000
-        </button>
-        <button class="modal-btn" onclick="addBalance(1000000)">
-          Rp 1.000.000
-        </button>
+      <div class="modal-box" style="border-color: #00e676">
+        <h3 style="color: #00e676; font-family: 'Cinzel', serif;">💸 ISI SALDO</h3>
+        <button class="modal-btn" onclick="addBalance(100000)">Rp 100.000</button>
+        <button class="modal-btn" onclick="addBalance(1000000)">Rp 1.000.000</button>
         <input
           type="number"
           id="manual-input"
-          style="
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background: #222;
-            border: 1px solid #555;
-            color: white;
-            border-radius: 5px;
-          "
+          style="width: 100%; padding: 12px; margin: 15px 0; background: #222; border: 1px solid #555; color: white; border-radius: 8px; font-size: 1.1rem; text-align: center;"
           placeholder="Input Manual..."
         />
-        <button
-          class="modal-btn"
-          onclick="addManualBalance()"
-          style="background: #00c853; color: black"
-        >
+        <button class="modal-btn" onclick="addManualBalance()" style="background: linear-gradient(180deg, #00c853, #007e33); color: white;">
           ISI MANUAL
         </button>
-        <button
-          class="modal-btn"
-          onclick="closeModals()"
-          style="background: #555"
-        >
-          Batal
-        </button>
+        <button class="modal-btn" onclick="closeModals()">Batal</button>
       </div>
     </div>
 
     <div id="admin-modal" class="modal-overlay">
       <div class="modal-box" style="border-color: red">
-        <h3 style="color: red">⚙️ ADMIN MENU</h3>
-        <button class="modal-btn" onclick="setMode('NORMAL')">
-          Normal (Acak)
-        </button>
-        <button class="modal-btn" onclick="setMode('MAXWIN')">
-          ⚡ MAXWIN (Gacor)
-        </button>
-        <button class="modal-btn" onclick="setMode('RUNGKAD')">
-          💀 RUNGKAD (Sedot)
-        </button>
-        <div id="mode-display" style="color: yellow; margin: 10px">
+        <h3 style="color: red; font-family: 'Cinzel', serif;">⚙️ ADMIN MENU</h3>
+        <p style="font-size:0.8rem; color:#aaa; margin-bottom:15px;">Simulasi Algoritma</p>
+        <button class="modal-btn" onclick="setMode('NORMAL')">Normal (Acak)</button>
+        <button class="modal-btn" onclick="setMode('MAXWIN')" style="background: linear-gradient(180deg, #ffd700, #b8860b); color:black;">⚡ MAXWIN (Gacor)</button>
+        <button class="modal-btn" onclick="setMode('RUNGKAD')" style="background: linear-gradient(180deg, #ff1744, #b71c1c);">💀 RUNGKAD (Sedot)</button>
+        <div id="mode-display" style="color: yellow; margin: 15px; font-weight: bold; background:#222; padding:5px; border-radius:5px;">
           Mode: NORMAL
         </div>
-        <button
-          class="modal-btn"
-          onclick="closeModals()"
-          style="background: #333"
-        >
-          Tutup
-        </button>
+        <button class="modal-btn" onclick="closeModals()">Tutup</button>
       </div>
     </div>
 
     <div class="admin-trigger" onclick="openAdmin()">⚙️</div>
 
     <script>
+      function acceptWarning() {
+        document.getElementById('edu-warning-modal').style.display = 'none';
+        playSound("topup");
+      }
+
       const SYMBOLS = [
         { id: 0, char: "💎", val: 0.25, color: "#00e5ff" },
-        { id: 1, char: "🟩", val: 0.4, color: "#00c853" },
+        { id: 1, char: "🟩", val: 0.4, color: "#00e676" },
         { id: 2, char: "🟡", val: 0.5, color: "#ffd600" },
-        { id: 3, char: "🔻", val: 0.8, color: "#aa00ff" },
+        { id: 3, char: "🔻", val: 0.8, color: "#d500f9" },
         { id: 4, char: "❤️", val: 1.0, color: "#ff1744" },
         { id: 5, char: "🏆", val: 1.5, color: "#ffd700" },
         { id: 6, char: "💍", val: 2.0, color: "#00b0ff" },
         { id: 7, char: "⏳", val: 5.0, color: "#ff9100" },
-        { id: 8, char: "👑", val: 20.0, color: "#d50000" }, // Crown mahal
+        { id: 8, char: "👑", val: 20.0, color: "#ff0040" },
       ];
 
-      let balance = 5000;
+      let balance = 100000;
+      let displayBalance = 100000;
       let bet = 200;
       let isSpinning = false;
       let grid = [];
       let nextMode = "NORMAL";
       let tumbleWin = 0;
+      
+      // Animated Value Variables
+      let animReq = null;
 
       const audio = {
         spin: new Audio("sounds/spin.mp3"),
@@ -705,13 +679,42 @@
         lose: new Audio("sounds/lose.mp3"),
         topup: new Audio("sounds/topup.mp3"),
       };
-      // Setup Audio
       Object.values(audio).forEach((a) => (a.volume = 0.5));
 
       function init() {
         updateUI();
         fillGrid(false);
         renderGrid(false);
+      }
+
+      // --- ANIMATED COUNTER (ROLLING NUMBERS) ---
+      function animateValue(obj, start, end, duration, formatPrefix = "") {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+          const current = Math.floor(easeOutQuart * (end - start) + start);
+          
+          if(obj.id === 'balance') {
+              obj.innerText = current.toLocaleString("id-ID");
+              displayBalance = current;
+          } else {
+              obj.innerText = formatPrefix + current.toLocaleString("id-ID");
+          }
+          
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          } else {
+            if(obj.id === 'balance') {
+                obj.innerText = end.toLocaleString("id-ID");
+                displayBalance = end;
+            } else {
+                obj.innerText = formatPrefix + end.toLocaleString("id-ID");
+            }
+          }
+        };
+        window.requestAnimationFrame(step);
       }
 
       // Logic Grid
@@ -725,20 +728,16 @@
       }
 
       function getRandomSym(allowMult) {
-        // Admin manipulation
         if (nextMode === "MAXWIN") {
-          // Chance gede simbol mahal & multiplier
-          if (Math.random() > 0.6) return SYMBOLS[8]; // Crown
+          if (Math.random() > 0.6) return SYMBOLS[8]; 
           if (allowMult && Math.random() > 0.7) return createMult(100);
         }
         if (nextMode === "RUNGKAD") {
-          // Gak pernah kasih multiplier
-          return SYMBOLS[Math.floor(Math.random() * 5)]; // Simbol murah doang
+          return SYMBOLS[Math.floor(Math.random() * 5)]; 
         }
 
-        // Normal RNG
         let rand = Math.random() * 100;
-        if (allowMult && rand > 97) return createMult(0); // 3% chance multiplier
+        if (allowMult && rand > 97) return createMult(0); 
 
         if (rand < 18) return SYMBOLS[0];
         if (rand < 34) return SYMBOLS[1];
@@ -753,17 +752,13 @@
 
       function createMult(forceVal) {
         const vals = [2, 3, 5, 8, 10, 15, 25, 50, 100, 500];
-        let val =
-          forceVal > 0
-            ? forceVal
-            : vals[Math.floor(Math.random() * vals.length)];
+        let val = forceVal > 0 ? forceVal : vals[Math.floor(Math.random() * vals.length)];
         let css = "orb-green";
         if (val >= 10) css = "orb-purple";
         if (val >= 100) css = "orb-red";
         return { type: "mult", val: val, char: val + "x", css: css };
       }
 
-      // --- RENDER DENGAN ANIMASI STAGGERED ---
       function renderGrid(animateDrop = true) {
         const el = document.getElementById("grid");
         el.innerHTML = "";
@@ -778,8 +773,7 @@
             if (s) {
               if (animateDrop) {
                 cell.classList.add("anim-drop");
-                // UBAH DISINI: Angka diperbesar (100 & 50) biar turunnya gantian pelan-pelan
-                let delay = c * 100 + r * 50;
+                let delay = c * 80 + r * 40;
                 cell.style.animationDelay = `${delay}ms`;
               }
 
@@ -788,7 +782,7 @@
               } else {
                 cell.innerText = s.char;
                 cell.style.color = s.color;
-                cell.style.textShadow = `0 0 10px ${s.color}`;
+                cell.style.textShadow = `0 0 15px ${s.color}`;
               }
             }
             el.appendChild(cell);
@@ -797,73 +791,63 @@
       }
 
       function spin() {
-        // 1. Cek Saldo & Status
         if (isSpinning || balance < bet) {
           if (balance < bet) openTopUp();
           return;
         }
 
+        let oldBalance = balance;
         balance -= bet;
-        updateUI();
+        animateValue(document.getElementById("balance"), oldBalance, balance, 300);
+        
         isSpinning = true;
         tumbleWin = 0;
 
         document.getElementById("spin-btn").classList.add("spin-disabled");
-        document.getElementById("win-display").innerText = "MEMUTAR...";
+        let wd = document.getElementById("win-display");
+        wd.innerText = "MEMUTAR...";
+        wd.style.color = "#ccc";
+        wd.style.textShadow = "none";
 
         playSound("spin");
 
         if (Math.random() < 0.4 || nextMode === "MAXWIN") triggerZeus();
 
-        // 2. EFEK "PENGOCOKAN" (Shuffle Animation)
-        // Ini mengembalikan efek simbol berubah-ubah secara acak
         const el = document.getElementById("grid");
         let shuffleCount = 0;
 
         let spinInterval = setInterval(() => {
-          el.innerHTML = ""; // Bersihkan grid visual
+          el.innerHTML = ""; 
 
-          // Loop buat bikin tampilan simbol acak sementara
           for (let r = 0; r < 5; r++) {
             for (let c = 0; c < 6; c++) {
               let cell = document.createElement("div");
               cell.className = "grid-cell";
-              // Catatan: Kita TIDAK pakai class 'anim-drop' disini biar gak berat
-
-              // Ambil simbol sembarang untuk efek visual saja
               let randSym = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-
               cell.innerText = randSym.char;
               cell.style.color = randSym.color;
-              cell.style.opacity = "0.7"; // Agak transparan biar kesan bergerak cepat
-
+              cell.style.opacity = "0.4"; 
+              cell.style.filter = "blur(2px)";
               el.appendChild(cell);
             }
           }
 
           shuffleCount++;
 
-          // 3. STOP PENGOCOKAN & TAMPILKAN HASIL AKHIR
-          // Angka 20 berarti ngocok selama 2 detik (20 x 100ms)
-          if (shuffleCount >= 20) {
+          if (shuffleCount >= 15) {
             clearInterval(spinInterval);
-
-            el.innerHTML = ""; // Hapus simbol acak tadi
-
-            // Panggil logika hasil asli & animasi Drop Air Terjun
+            el.innerHTML = ""; 
             fillGrid(true);
             renderGrid(true);
 
-            // Tunggu animasi drop selesai (2 detik) baru hitung kemenangan
             setTimeout(() => {
               processWin(0);
-            }, 2000);
+            }, 1800);
           }
-        }, 100); // Kecepatan ganti simbol (0.1 detik)
+        }, 80); 
       }
 
       function processWin(currentAccumulatedWin) {
-        // 1. Hitung Simbol & Kemenangan (Bagian ini wajib ada)
         let counts = {};
         let winCoords = [];
 
@@ -880,7 +864,6 @@
         let hasWin = false;
         let roundPay = 0;
 
-        // Filter kemenangan > 8 simbol
         for (let id in counts) {
           if (counts[id].n >= 8) {
             hasWin = true;
@@ -894,19 +877,16 @@
           }
         }
 
-        // 2. Eksekusi Animasi (Bagian yang diedit tadi)
         if (hasWin) {
-          // Update total kemenangan sementara
-          let totalNow = currentAccumulatedWin + roundPay; // Ganti nama variabel biar aman
+          let totalNow = currentAccumulatedWin + roundPay; 
 
           let wd = document.getElementById("win-display");
-          wd.innerText = "Rp " + totalNow.toLocaleString();
           wd.style.color = "gold";
           wd.style.textShadow = "0 0 10px red";
+          animateValue(wd, currentAccumulatedWin, totalNow, 800, "Rp ");
 
           playSound("win");
 
-          // Tahap A: Highlight Border (Nyala dulu)
           winCoords.forEach((p) => {
             let cell = document.getElementById(`c-${p.c}-${p.r}`);
             if (cell) {
@@ -915,11 +895,9 @@
             }
           });
 
-          // Tahap B: Pecah Satu-Satu (Combo Effect)
-          let startDelay = 800; // Tunggu 0.8 detik buat liat hasil
-          let popSpeed = 300; // Jeda 0.3 detik tiap simbol pecah
+          let startDelay = 800; 
+          let popSpeed = 150; 
 
-          // Acak urutan pecah
           winCoords.sort(() => Math.random() - 0.5);
 
           winCoords.forEach((p, index) => {
@@ -929,25 +907,20 @@
                 cell.classList.remove("anim-win-border");
                 cell.classList.add("anim-explode");
               }
-            }, startDelay + index * popSpeed);
+            }, startDelay + (index % 5) * popSpeed); // stagger slightly faster
           });
 
-          // Tahap C: Lanjut Ronde Berikutnya
-          let totalWait = startDelay + winCoords.length * popSpeed + 500;
+          let totalWait = startDelay + 5 * popSpeed + 400;
 
           setTimeout(() => {
-            // Hapus data di array grid
             winCoords.forEach((p) => (grid[p.c][p.r] = null));
-
             gravity();
             refill();
-            renderGrid(true); // Simbol baru turun
+            renderGrid(true); 
 
-            // Cek lagi (Rekursif) dengan nilai kemenangan yang baru
-            setTimeout(() => processWin(totalNow), 1500);
+            setTimeout(() => processWin(totalNow), 1200);
           }, totalWait);
         } else {
-          // Kalau tidak ada kemenangan, selesai
           finishRound(currentAccumulatedWin);
         }
       }
@@ -971,7 +944,6 @@
 
       function finishRound(totalWin) {
         let totalMult = 0;
-        // Scan Multiplier di layar
         for (let c = 0; c < 6; c++) {
           for (let r = 0; r < 5; r++) {
             if (grid[c][r] && grid[c][r].type === "mult")
@@ -980,33 +952,34 @@
         }
 
         if (totalWin > 0 && totalMult > 0) {
-          // MENANG + MULTIPLIER
-          triggerZeus(); // Kakek nyambar
+          triggerZeus(); 
           setTimeout(() => {
             let finalPay = totalWin * totalMult;
             let wd = document.getElementById("win-display");
-            wd.innerHTML = `Rp ${totalWin.toLocaleString()} x <span style="color:red; font-size:1.5em">${totalMult}x</span>`;
-            playSound("win"); // Harusnya suara petir
+            wd.innerHTML = `Rp ${totalWin.toLocaleString("id-ID")} x <span style="color:red; font-size:1.5em; text-shadow:0 0 10px white;">${totalMult}x</span>`;
+            playSound("win"); 
+            
+            // Screen shake effect for massive hit
+            document.body.style.animation = "shakeZeus 0.5s ease";
+            setTimeout(() => { document.body.style.animation = ""; }, 500);
 
             setTimeout(() => {
+              let oldBalance = balance;
               balance += finalPay;
-              updateUI();
-              // Tampilkan BIG WIN Notification
+              animateValue(document.getElementById("balance"), oldBalance, balance, 1500);
               showBigWin(finalPay, totalMult);
             }, 1000);
           }, 800);
         } else if (totalWin > 0) {
-          // MENANG BIASA
+          let oldBalance = balance;
           balance += totalWin;
-          updateUI();
+          animateValue(document.getElementById("balance"), oldBalance, balance, 1000);
           endSpin();
         } else {
-          // KALAH
           let wd = document.getElementById("win-display");
           wd.innerText = "RUNGKAD!";
           wd.style.color = "grey";
           playSound("lose");
-          updateUI();
           endSpin();
         }
       }
@@ -1016,16 +989,17 @@
         const title = document.getElementById("win-title");
         const amt = document.getElementById("win-amount-text");
 
-        // Tentukan Judul Berdasarkan Kali
         if (mult >= 500) title.innerText = "MAX WIN ⚡";
         else if (mult >= 100) title.innerText = "SENSATIONAL";
         else if (mult >= 50) title.innerText = "MEGA WIN";
         else title.innerText = "BIG WIN";
 
-        amt.innerText = "Rp " + amount.toLocaleString();
-
+        amt.innerText = "Rp 0";
         modal.style.display = "flex";
-        playSound("win"); // Play sound lagi biar heboh
+        playSound("win"); 
+        
+        // Count up animation for big win
+        animateValue(amt, 0, amount, 2000, "Rp ");
       }
 
       function closeBigWin() {
@@ -1038,21 +1012,19 @@
         document.getElementById("spin-btn").classList.remove("spin-disabled");
       }
 
-      // --- UTILITIES ---
       function updateUI() {
-        document.getElementById("balance").innerText =
-          balance.toLocaleString("id-ID");
+        document.getElementById("balance").innerText = displayBalance.toLocaleString("id-ID");
         document.getElementById("bet").innerText = bet.toLocaleString("id-ID");
       }
       function openTopUp() {
         document.getElementById("topup-modal").style.display = "flex";
       }
       function addBalance(amount) {
+        let oldBalance = balance;
         balance += amount;
-        updateUI();
+        animateValue(document.getElementById("balance"), oldBalance, balance, 500);
         closeModals();
         playSound("topup");
-        alert(`✅ Deposit Rp ${amount.toLocaleString()} Berhasil!`);
       }
       function addManualBalance() {
         const val = parseInt(document.getElementById("manual-input").value);
@@ -1080,7 +1052,7 @@
       function triggerZeus() {
         const z = document.getElementById("zeus-anim");
         z.classList.add("zeus-strike");
-        setTimeout(() => z.classList.remove("zeus-strike"), 800);
+        setTimeout(() => z.classList.remove("zeus-strike"), 500);
       }
       function playSound(name) {
         if (audio[name]) {
